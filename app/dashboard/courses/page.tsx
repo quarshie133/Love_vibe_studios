@@ -1,38 +1,44 @@
+import { getCourses } from '@/lib/actions';
+import Link from 'next/link';
 import styles from './courses.module.css';
 
-const COURSES = [
-  { num: '01', title: 'Pre-Marital Counselling', duration: '3 Months', fees: [{ type: 'Couple', ghs: 'GHS 1,500', usd: '$137' }] },
-  { num: '02', title: 'Post-Marital Counselling', duration: '3 Months', fees: [{ type: 'Single', ghs: 'GHS 1,200', usd: '$109' }, { type: 'Couple', ghs: 'GHS 2,000', usd: '$181' }] },
-  { num: '03', title: 'Sex in Marriage', duration: '3 Months', fees: [{ type: 'Single', ghs: 'GHS 1,500', usd: '$137' }, { type: 'Couple', ghs: 'GHS 2,500', usd: '$228' }], featured: true },
-  { num: '04', title: 'Legal Advice on Marriage & Divorce', duration: '3 Months', fees: [{ type: 'Single', ghs: 'GHS 1,500', usd: '$137' }, { type: 'Couple', ghs: 'GHS 2,500', usd: '$228' }] },
-  { num: '05', title: 'Crisis Management in Marriage', duration: '3 Months', fees: [{ type: 'Single', ghs: 'GHS 1,300', usd: '$118' }, { type: 'Couple', ghs: 'GHS 2,000', usd: '$182' }] },
-  { num: '06', title: 'Thriving Beyond Divorce', duration: '3 Months', fees: [{ type: 'Fee', ghs: 'GHS 2,000', usd: '$182' }] },
-];
+export default async function CoursesPage() {
+  const courses = await getCourses();
 
-export default function CoursesPage() {
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Courses</h1>
-        <p>Manage course listings, pricing, and enrolment details.</p>
+        <div>
+          <h1>Course Management</h1>
+          <p>Add, edit, or remove courses from your website.</p>
+        </div>
+        <Link href="/dashboard/courses/new" className={styles.btn}>
+          + Add New Course
+        </Link>
       </div>
+
       <div className={styles.grid}>
-        {COURSES.map(c => (
-          <div key={c.num} className={`${styles.card} ${c.featured ? styles.featured : ''}`}>
-            {c.featured && <span className={styles.badge}>Popular</span>}
-            <div className={styles.num}>{c.num}</div>
-            <h3>{c.title}</h3>
-            <p className={styles.duration}>⏱ {c.duration}</p>
-            <div className={styles.fees}>
-              {c.fees.map(f => (
-                <div key={f.type} className={styles.feeRow}>
-                  <span className={styles.feeType}>{f.type}</span>
-                  <span className={styles.feeAmt}>{f.ghs} <span>/ {f.usd}</span></span>
+        {courses.length > 0 ? (
+          courses.map(c => (
+            <div key={c.id} className={styles.card}>
+              <div className={styles.cardContent}>
+                <h3>{c.title}</h3>
+                <p>{c.description.substring(0, 100)}...</p>
+                <div className={styles.meta}>
+                  <span>🕒 {c.duration || 'Flexible'}</span>
+                  <span>💰 GHS {c.priceGHS || '0'} / ${c.priceUSD || '0'}</span>
                 </div>
-              ))}
+              </div>
+              <div className={styles.actions}>
+                <Link href={`/dashboard/courses/${c.id}`} className={styles.editBtn}>Edit</Link>
+              </div>
             </div>
+          ))
+        ) : (
+          <div className={styles.empty}>
+            <p>No courses added yet. Click the button above to create your first course.</p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

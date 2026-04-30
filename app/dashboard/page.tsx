@@ -1,23 +1,28 @@
+import { getStats, getEnquiries, getBookings } from '@/lib/actions';
 import styles from './overview.module.css';
 
-const STAT_CARDS = [
-  { label: 'Total Enquiries', value: '—', icon: '📬', color: '#7B3FA0' },
-  { label: 'New (Unread)', value: '—', icon: '🔔', color: '#D4AF37' },
-  { label: 'Courses Offered', value: '6', icon: '📚', color: '#3d9e7e' },
-  { label: 'Testimonials', value: '—', icon: '💬', color: '#e07b54' },
-];
+export default async function DashboardPage() {
+  const stats = await getStats();
+  const recentEnquiries = (await getEnquiries()).slice(0, 5);
+  const recentBookings = (await getBookings()).slice(0, 5);
 
-export default function DashboardPage() {
+  const STAT_CARDS = [
+    { label: 'Total Enquiries', value: stats.totalEnquiries, icon: '📬', color: '#7B3FA0' },
+    { label: 'Pending Bookings', value: stats.pendingBookings, icon: '📅', color: '#D4AF37' },
+    { label: 'Courses Offered', value: stats.totalCourses, icon: '📚', color: '#3d9e7e' },
+    { label: 'Testimonials', value: stats.totalTestimonials, icon: '💬', color: '#e07b54' },
+  ];
+
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.header}>
-        <h1>Overview</h1>
-        <p>Welcome back to the Love Vibe Studios admin dashboard.</p>
+        <h1>Dashboard Overview</h1>
+        <p>Manage your courses, enquiries, and student bookings from one place.</p>
       </div>
 
       <div className={styles.cards}>
         {STAT_CARDS.map(c => (
-          <div key={c.label} className={styles.card} style={{ borderTopColor: c.color }}>
+          <div key={c.label} className={styles.card} style={{ '--accent-color': c.color } as any}>
             <div className={styles.cardIcon}>{c.icon}</div>
             <div className={styles.cardValue}>{c.value}</div>
             <div className={styles.cardLabel}>{c.label}</div>
@@ -25,15 +30,48 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      <div className={styles.info}>
-        <h2>🚀 Getting Started</h2>
-        <p>Your dashboard is set up and ready. To enable live data:</p>
-        <ol>
-          <li>Create a <strong>Neon Postgres</strong> database at <a href="https://neon.tech" target="_blank" rel="noreferrer">neon.tech</a></li>
-          <li>Copy your <strong>connection string</strong> and paste it into <code>.env.local</code> as <code>DATABASE_URL</code></li>
-          <li>Run <code>npm run db:push</code> to create the tables</li>
-          <li>Update your <code>DASHBOARD_PASSWORD</code> in <code>.env.local</code></li>
-        </ol>
+      <div className={styles.recentSection}>
+        <div className={styles.recentBox}>
+          <h2>Recent Enquiries</h2>
+          {recentEnquiries.length > 0 ? (
+            <div className={styles.list}>
+              {recentEnquiries.map(e => (
+                <div key={e.id} className={styles.listItem}>
+                  <div>
+                    <strong>{e.firstName} {e.lastName}</strong>
+                    <p>{e.program || 'General Enquiry'}</p>
+                  </div>
+                  <span className={styles.time}>{new Date(e.createdAt!).toLocaleDateString()}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.emptyState}>
+              No recent enquiries found.
+            </div>
+          )}
+        </div>
+
+        <div className={styles.recentBox}>
+          <h2>Booking Queue</h2>
+          {recentBookings.length > 0 ? (
+            <div className={styles.list}>
+               {recentBookings.map(b => (
+                <div key={b.id} className={styles.listItem}>
+                  <div>
+                    <strong>{b.name}</strong>
+                    <p>{b.course || 'Consultation'}</p>
+                  </div>
+                  <span className={styles.time}>{new Date(b.createdAt!).toLocaleDateString()}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.emptyState}>
+              No recent bookings found.
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

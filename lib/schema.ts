@@ -22,6 +22,31 @@ export const testimonials = pgTable('testimonials', {
   createdAt: timestamp('created_at').defaultNow(),
 });
 
+export const courses = pgTable('courses', {
+  id: serial('id').primaryKey(),
+  title: varchar('title', { length: 255 }).notNull(),
+  description: text('description').notNull(),
+  duration: varchar('duration', { length: 100 }),
+  priceSingleGHS: integer('price_single_ghs'),
+  priceSingleUSD: integer('price_single_usd'),
+  priceCoupleGHS: integer('price_couple_ghs'),
+  priceCoupleUSD: integer('price_couple_usd'),
+  status: varchar('status', { length: 50 }).default('active'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+export const bookings = pgTable('bookings', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 255 }).notNull(),
+  email: varchar('email', { length: 255 }).notNull(),
+  phone: varchar('phone', { length: 50 }),
+  course: varchar('course', { length: 255 }),
+  status: varchar('status', { length: 50 }).default('new'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
 export type Enquiry = typeof enquiries.$inferSelect;
 export type NewEnquiry = typeof enquiries.$inferInsert;
 export type Testimonial = typeof testimonials.$inferSelect;
+export type Course = typeof courses.$inferSelect;
+export type Booking = typeof bookings.$inferSelect;

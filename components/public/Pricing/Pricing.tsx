@@ -1,41 +1,79 @@
+import { getCourses } from '@/lib/actions';
 import styles from './Pricing.module.css';
 
 const ENROL_URL = 'https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAAX6CbARUMkc5RjE3STFISFg3VElZV0tNR1lIS0FNRy4u&origin=QRCode';
 
-const COURSES = [
-  { num: '01', title: 'Pre-Marital Counselling', lang: 'Asesoramiento prematrimonial / Conseil prénuptial', fees: [{ type: 'Couple', ghs: 'GHS 1,500', usd: '$137' }] },
-  { num: '02', title: 'Post-Marital Counselling', lang: 'Asesoramiento postmatrimonial / Conseil post-nuptial', fees: [{ type: 'Single', ghs: 'GHS 1,200', usd: '$109' }, { type: 'Couple', ghs: 'GHS 2,000', usd: '$181' }] },
-  { num: '03', title: 'Sex in Marriage', lang: 'El sexo en el matrimonio / Les relations sexuelles dans le mariage', fees: [{ type: 'Single', ghs: 'GHS 1,500', usd: '$137' }, { type: 'Couple', ghs: 'GHS 2,500', usd: '$228' }], featured: true },
-  { num: '04', title: 'Legal Advice on Marriage & Divorce', lang: 'Asesoramiento legal sobre matrimonio y divorcio', fees: [{ type: 'Single', ghs: 'GHS 1,500', usd: '$137' }, { type: 'Couple', ghs: 'GHS 2,500', usd: '$228' }] },
-  { num: '05', title: 'Crisis Management in Marriage', lang: 'Gestión de crisis en el matrimonio / Gestion des crises conjugales', fees: [{ type: 'Single', ghs: 'GHS 1,300', usd: '$118' }, { type: 'Couple', ghs: 'GHS 2,000', usd: '$182' }] },
-  { num: '06', title: 'Thriving Beyond Divorce', lang: "Prosperando después del divorcio / S'épanouir après le divorce", fees: [{ type: 'Fee', ghs: 'GHS 2,000', usd: '$182' }] },
+const FALLBACK_COURSES = [
+  { num: '01', title: 'Pre-Marital Counselling', lang: 'Asesoramiento prematrimonial / Conseil prénuptial', duration: '3 Months', fees: [{ type: 'Couple', ghs: 'GHS 1,500', usd: '$137' }] },
+  { num: '02', title: 'Post-Marital Counselling', lang: 'Asesoramiento postmatrimonial / Conseil post-nuptial', duration: '3 Months', fees: [{ type: 'Single', ghs: 'GHS 1,200', usd: '$109' }, { type: 'Couple', ghs: 'GHS 2,000', usd: '$181' }] },
+  { num: '03', title: 'Sex in Marriage', lang: 'El sexo en el matrimonio / Les relations sexuelles dans le mariage', duration: '3 Months', fees: [{ type: 'Single', ghs: 'GHS 1,500', usd: '$137' }, { type: 'Couple', ghs: 'GHS 2,500', usd: '$228' }], featured: true },
+  { num: '04', title: 'Legal Advice on Marriage & Divorce', lang: 'Asesoramiento legal sobre matrimonio y divorcio', duration: '3 Months', fees: [{ type: 'Single', ghs: 'GHS 1,500', usd: '$137' }, { type: 'Couple', ghs: 'GHS 2,500', usd: '$228' }] },
+  { num: '05', title: 'Crisis Management in Marriage', lang: 'Gestión de crisis en el matrimonio / Gestion des crises conjugales', duration: '3 Months', fees: [{ type: 'Single', ghs: 'GHS 1,300', usd: '$118' }, { type: 'Couple', ghs: 'GHS 2,000', usd: '$182' }] },
+  { num: '06', title: 'Thriving Beyond Divorce', lang: "Prosperando después del divorcio / S'épanouir après le divorce", duration: '3 Months', fees: [{ type: 'Fee', ghs: 'GHS 2,000', usd: '$182' }] },
 ];
 
-export default function Pricing() {
+export default async function Pricing() {
+  const dbCourses = await getCourses();
+  
+  const courses = dbCourses.length > 0 
+    ? dbCourses.map((c, i) => {
+        const fees = [];
+        if (c.priceSingleGHS) {
+          fees.push({ 
+            type: 'Single', 
+            ghs: `GHS ${c.priceSingleGHS.toLocaleString()}`, 
+            usd: `$${c.priceSingleUSD?.toLocaleString()}` 
+          });
+        }
+        if (c.priceCoupleGHS) {
+          fees.push({ 
+            type: 'Couple', 
+            ghs: `GHS ${c.priceCoupleGHS.toLocaleString()}`, 
+            usd: `$${c.priceCoupleUSD?.toLocaleString()}` 
+          });
+        }
+        // Fallback for "Thriving Beyond Divorce" style single fee
+        if (fees.length === 0 && (c.priceSingleGHS || c.priceCoupleGHS)) {
+           // handled above
+        } else if (fees.length === 0) {
+           fees.push({ type: 'Fee', ghs: 'TBD', usd: 'TBD' });
+        }
+        
+        return {
+          num: String(i + 1).padStart(2, '0'),
+          title: c.title,
+          lang: c.description,
+          duration: c.duration || '3 Months',
+          fees,
+          featured: i === 2 
+        };
+      })
+    : FALLBACK_COURSES;
+
   return (
     <section className={styles.pricing} id="pricing">
-      <div className={`${styles.header} fade-in`}>
-        <div className={styles.tag}>Investment in Love</div>
-        <h2>Courses <em>(Los Cursos / Les Cours)</em></h2>
-        <p>All programmes run for 3 months. Fees listed in Ghana Cedis (GHS) and US Dollars ($).</p>
+      <div className={`${styles['section-header']} fade-in`}>
+        <div className={styles['section-tag']} style={{color: 'var(--gold)'}}>Investment in Love</div>
+        <h2 style={{color: 'var(--white)'}}>Courses <em style={{color: 'var(--gold)', fontStyle: 'italic'}}>(Los Cursos / Les Cours)</em></h2>
+        <p style={{color: 'rgba(255,255,255,0.55)'}}>All programmes run for 3 months. Fees listed in Ghana Cedis (GHS) and US Dollars ($).</p>
       </div>
-      <div className={styles.grid}>
-        {COURSES.map(c => (
-          <div key={c.num} className={`${styles.card} ${c.featured ? styles.featured : ''} fade-in`}>
-            {c.featured && <div className={styles.badge}>Popular</div>}
-            <div className={styles.num}>{c.num}</div>
+      <div className={styles['courses-grid']}>
+        {courses.map(c => (
+          <div key={c.num} className={`${styles['course-card']} ${c.featured ? styles['featured-course'] : ''} fade-in`}>
+            {c.featured && <div className={styles['course-badge']}>Popular</div>}
+            <div className={styles['course-num']}>{c.num}</div>
             <h3>{c.title}</h3>
-            <p className={styles.lang}>{c.lang}</p>
-            <div className={styles.duration}>⏱ Duration: 3 Months</div>
-            <div className={styles.fees}>
-              {c.fees.map(f => (
-                <div key={f.type} className={styles.feeRow}>
-                  <span className={styles.feeType}>{f.type}</span>
-                  <span className={styles.feeAmt}>{f.ghs} <span className={styles.feeUsd}>/ {f.usd}</span></span>
+            <p className={styles['course-lang']}>{c.lang}</p>
+            <div className={styles['course-duration']}>⏱ Duration: {c.duration}</div>
+            <div className={styles['course-fees']}>
+              {c.fees.map((f, idx) => (
+                <div key={idx} className={styles['fee-row']}>
+                  <span className={styles['fee-type']}>{f.type}</span>
+                  <span className={styles['fee-amount']}>{f.ghs} <span className={styles['fee-usd']}>/ {f.usd}</span></span>
                 </div>
               ))}
             </div>
-            <a href={ENROL_URL} target="_blank" rel="noreferrer" className={styles.btn}>Enrol Now</a>
+            <a href={ENROL_URL} target="_blank" rel="noreferrer" className={styles['btn-course']}>Enrol Now</a>
           </div>
         ))}
       </div>

@@ -1,37 +1,244 @@
-.header { margin-bottom: 2rem; }
-.header h1 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--white); margin-bottom: 0.3rem; }
-.header p { font-size: 0.85rem; color: rgba(255,255,255,0.4); }
+.container {
+  padding: 1rem 0;
+}
 
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+
+.header p {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.4);
+}
+
+.btn {
+  background: var(--gold);
+  color: var(--deep);
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(212,175,55,0.2);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
 
 .card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(212,175,55,0.15);
-  border-radius: 8px;
-  padding: 1.5rem;
-  position: relative;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+}
+
+.card:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.cardContent {
+  padding: 1.8rem;
+  flex: 1;
+}
+
+.cardContent h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+}
+
+.cardContent p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.meta span {
+  font-size: 0.75rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.actions {
+  padding: 1.2rem 1.8rem;
+  background: rgba(0,0,0,0.1);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editBtn {
+  font-size: 0.85rem;
+  color: var(--white);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
   transition: all 0.2s;
 }
 
-.card:hover { background: rgba(255,255,255,0.07); border-color: var(--gold); }
-
-.featured { background: rgba(212,175,55,0.07) !important; border-color: var(--gold) !important; }
-
-.badge {
-  position: absolute; top: -10px; right: 1rem;
-  background: var(--gold); color: var(--deep);
-  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 0.25rem 0.8rem; border-radius: 2px; font-weight: 600;
+.editBtn:hover {
+  background: rgba(255,255,255,0.1);
 }
 
-.num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: rgba(212,175,55,0.2); line-height: 1; margin-bottom: 0.5rem; }
-.card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--white); line-height: 1.3; margin-bottom: 0.5rem; }
-.duration { font-size: 0.78rem; color: var(--gold); margin-bottom: 1rem; }
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 6rem;
+  background: rgba(255,255,255,0.01);
+  border: 2px dashed rgba(255,255,255,0.05);
+  border-radius: 20px;
+  color: rgba(255,255,255,0.3);
+}
 
-.fees { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.8rem; display: flex; flex-direction: column; gap: 0.4rem; }
-.feeRow { display: flex; justify-content: space-between; }
-.feeType { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.4); }
-.feeAmt { font-size: 0.9rem; color: var(--gold); }
-.feeAmt span { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+.formCard {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 800px;
+}
 
-@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.field label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.field input, .field textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 1rem;
+  color: var(--white);
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.field input:focus, .field textarea:focus {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.08);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.backLink {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: var(--gold);
+}
+
+.submitBtn {
+  background: var(--gold);
+  color: var(--deep);
+  padding: 1rem 2.5rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 1rem;
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+}
+
+.footerActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.deleteBtn {
+  background: transparent;
+  color: #fc8181;
+  border: 1px solid rgba(229, 62, 62, 0.2);
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deleteBtn:hover {
+  background: rgba(229, 62, 62, 0.1);
+  border-color: rgba(229, 62, 62, 0.4);
+}
+
+.pricingSection {
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pricingSection h3 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

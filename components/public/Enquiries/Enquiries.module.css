@@ -3,7 +3,7 @@
   padding: 5rem 4rem;
 }
 
-.inner {
+.enquiries-inner {
   max-width: 1000px;
   margin: 0 auto;
   display: grid;
@@ -12,7 +12,7 @@
   align-items: center;
 }
 
-.tag {
+.section-tag {
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -20,7 +20,7 @@
   margin-bottom: 1rem;
 }
 
-.content h2 {
+.enquiries-content h2 {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(2rem, 3.5vw, 2.8rem);
   font-weight: 300;
@@ -29,16 +29,16 @@
   margin-bottom: 2rem;
 }
 
-.content h2 em { font-style: italic; color: var(--gold); }
+.enquiries-content h2 em { font-style: italic; color: var(--gold); }
 
-.detail {
+.contact-detail {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-.icon {
+.contact-detail-icon {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -51,27 +51,27 @@
   flex-shrink: 0;
 }
 
-.text { display: flex; flex-direction: column; gap: 0.2rem; }
+.contact-detail-text { display: flex; flex-direction: column; gap: 0.2rem; }
 
-.label {
+.contact-detail-label {
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--gold);
 }
 
-.value { font-size: 0.95rem; color: var(--white); line-height: 1.6; }
-.value a { color: var(--white); text-decoration: none; transition: color 0.3s; }
-.value a:hover { color: var(--gold); }
+.contact-detail-value { font-size: 0.95rem; color: var(--white); line-height: 1.6; }
+.contact-detail-value a { color: var(--white); text-decoration: none; transition: color 0.3s; }
+.contact-detail-value a:hover { color: var(--gold); }
 
-.qrWrap {
+.qr-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.2rem;
 }
 
-.qrFrame {
+.qr-frame {
   background: var(--white);
   padding: 1rem;
   border-radius: 8px;
@@ -79,13 +79,13 @@
   display: inline-block;
 }
 
-.qrFrame img {
+.qr-frame img {
   display: block;
   border-radius: 4px;
   background: #eee;
 }
 
-.qrLabel {
+.qr-label {
   text-align: center;
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.1rem;
@@ -94,7 +94,7 @@
   line-height: 1.5;
 }
 
-.qrLabel span {
+.qr-label span {
   color: var(--gold);
   display: block;
   font-size: 0.72rem;
@@ -106,7 +106,8 @@
 
 @media (max-width: 900px) {
   .enquiries { padding: 4rem 1.5rem; }
-  .inner { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
-  .detail { justify-content: center; text-align: left; }
-  .qrFrame img { width: 160px; height: 160px; }
+  .enquiries-inner { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+  .contact-detail { justify-content: center; text-align: left; }
+  .qr-frame img { width: 160px; height: 160px; }
 }
+

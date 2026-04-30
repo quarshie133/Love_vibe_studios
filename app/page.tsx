@@ -12,8 +12,23 @@ import Enquiries from '@/components/public/Enquiries/Enquiries';
 import SocialBar from '@/components/public/SocialBar/SocialBar';
 import Footer from '@/components/public/Footer/Footer';
 import ScrollAnimations from '@/components/public/ScrollAnimations/ScrollAnimations';
+import { getCourses } from '@/lib/actions';
 
-export default function Home() {
+export default async function Home() {
+  const courses = await getCourses();
+  
+  const programs = courses.length > 0
+    ? [...courses.map(c => c.title), 'Not sure — I need guidance']
+    : [
+        'Pre-Marital Counseling',
+        'Post-Marital Counseling',
+        'Sex in Marriage',
+        'Legal Advice: Marriage & Divorce',
+        'Crisis Management in Marriage',
+        'Thriving Beyond Divorce',
+        'Not sure — I need guidance'
+      ];
+
   return (
     <>
       <ScrollAnimations />
@@ -25,7 +40,7 @@ export default function Home() {
       <Founder />
       <Testimonials />
       <Pricing />
-      <Contact />
+      <Contact programs={programs} />
       <Books />
       <Enquiries />
       <SocialBar />
