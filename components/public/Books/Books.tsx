@@ -8,25 +8,25 @@ import book4 from "../../../public/book4.jpeg"
 const BOOKS = [
   {
     num: 'Book 01',
-    title: 'Love by Design',
+    title: 'When Love Becomes a Trap',
     author: 'Lady Rev. Baabah Djirackor',
     img: book1,
   },
   {
     num: 'Book 02',
-    title: 'The Marriage Code',
+    title: 'Guard Your Name',
     author: 'Lady Rev. Baabah Djirackor',
     img: book2,
   },
   {
     num: 'Book 03',
-    title: 'Beyond the Vows',
+    title: 'Physical Intimacy in a Relationship',
     author: 'Lady Rev. Baabah Djirackor',
     img: book3,
   },
   {
     num: 'Book 04',
-    title: 'Rising After Divorce',
+    title: 'When Money Talks',
     author: 'Lady Rev. Baabah Djirackor',
     img: book4,
   },

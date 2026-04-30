@@ -27,7 +27,6 @@ export default function Hero() {
             alt="Love Vibe Studios"
             style={{ width: '160px', height: '160px', borderRadius: '50%', marginBottom: '1.5rem', objectFit: 'cover' }}
           />
-          <h2>Where Love is Learned</h2>
           <p>Expert-led · Confidential · Online</p>
         </div>
       </div>

@@ -9,40 +9,33 @@ export default function Enquiries() {
           <h2>
             Connect With Us <em>Directly</em>
           </h2>
-
           <div className={styles.detail}>
-            <div className={styles.icon}>📧</div>
+            <div className={styles.icon}>📞</div>
             <div className={styles.text}>
-              <span className={styles.label}>Email</span>
+              <span className={styles.label}>Phone / WhatsApp</span>
               <span className={styles.value}>
-                <a href="mailto:info@lovevibe.studio">info@lovevibe.studio</a>
+                <a href="tel:+233551552283">+233 551 552 283</a><br />
+                <a href="tel:+233209768114">+233 209 768 114</a>
+              </span>
+            </div>
+          </div>
+          <div className={styles.detail}>
+            <div className={styles.icon}>✉️</div>
+            <div className={styles.text}>
+              <span className={styles.label}>Email Address</span>
+              <span className={styles.value}>
+                <a href="mailto:lovevibestudio726@gmail.com">lovevibestudio726@gmail.com</a>
               </span>
             </div>
           </div>
 
           <div className={styles.detail}>
-            <div className={styles.icon}>📱</div>
+            <div className={styles.icon}>🌐</div>
             <div className={styles.text}>
-              <span className={styles.label}>WhatsApp / Phone</span>
+              <span className={styles.label}>Social Media</span>
               <span className={styles.value}>
-                <a href="tel:+233000000000">+233 000 000 000</a>
+                @LoveVibeStudios on YouTube, TikTok &amp; Instagram
               </span>
-            </div>
-          </div>
-
-          <div className={styles.detail}>
-            <div className={styles.icon}>🌍</div>
-            <div className={styles.text}>
-              <span className={styles.label}>Location</span>
-              <span className={styles.value}>Ghana · Online Worldwide</span>
-            </div>
-          </div>
-
-          <div className={styles.detail}>
-            <div className={styles.icon}>⏰</div>
-            <div className={styles.text}>
-              <span className={styles.label}>Office Hours</span>
-              <span className={styles.value}>Mon – Fri, 9am – 5pm GMT</span>
             </div>
           </div>
         </div>
