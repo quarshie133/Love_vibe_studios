@@ -1,0 +1,15 @@
+.header { margin-bottom: 2rem; }
+.header h1 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--white); margin-bottom: 0.3rem; }
+.header p { font-size: 0.85rem; color: rgba(255,255,255,0.4); }
+.notice { background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.2); border-radius: 8px; padding: 1rem 1.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 1.5rem; position: relative; }
+.stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 0.8rem; }
+.card p { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.7; font-style: italic; margin-bottom: 1rem; }
+.meta { display: flex; flex-direction: column; gap: 0.2rem; margin-bottom: 1rem; }
+.meta strong { font-size: 0.82rem; color: var(--white); }
+.meta span { font-size: 0.75rem; color: var(--rose); }
+.badge { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 20px; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.approved { background: rgba(61,158,126,0.15); color: #3d9e7e; }
+.pending { background: rgba(212,175,55,0.15); color: var(--gold); }
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }

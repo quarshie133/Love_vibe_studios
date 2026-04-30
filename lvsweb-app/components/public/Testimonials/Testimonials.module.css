@@ -1,0 +1,42 @@
+.testimonials { padding: 7rem 4rem; }
+
+.header { text-align: center; max-width: 650px; margin: 0 auto 4rem; }
+.tag { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose); margin-bottom: 1rem; }
+.header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; line-height: 1.2; }
+.header h2 em { font-style: italic; color: var(--rose); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(123, 63, 160, 0.12);
+  position: relative;
+}
+
+.quoteChar {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem;
+  color: var(--blush);
+  line-height: 0.5;
+  margin-bottom: 1rem;
+}
+
+.stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 0.8rem; }
+
+.card p { font-size: 0.9rem; color: var(--muted); line-height: 1.8; font-style: italic; margin-bottom: 1.5rem; }
+
+.name { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; color: var(--deep); text-transform: uppercase; }
+.role { font-size: 0.75rem; color: var(--rose); margin-top: 0.2rem; }
+
+@media (max-width: 900px) {
+  .testimonials { padding: 4rem 1.5rem; }
+  .grid { grid-template-columns: 1fr; }
+}
