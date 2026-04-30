@@ -26,7 +26,7 @@ export default async function CoursesPage() {
                 <p>{c.description.substring(0, 100)}...</p>
                 <div className={styles.meta}>
                   <span>🕒 {c.duration || 'Flexible'}</span>
-                  <span>💰 GHS {c.priceGHS || '0'} / ${c.priceUSD || '0'}</span>
+                  <span>💰 GHS {c.priceSingleGHS || '0'} / ${c.priceSingleUSD || '0'}</span>
                 </div>
               </div>
               <div className={styles.actions}>
