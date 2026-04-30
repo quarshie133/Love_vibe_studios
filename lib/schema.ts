@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp, varchar, integer } from 'drizzle-orm/pg-core';
 
 export const enquiries = pgTable('enquiries', {
   id: serial('id').primaryKey(),
@@ -17,7 +17,7 @@ export const testimonials = pgTable('testimonials', {
   name: varchar('name', { length: 200 }).notNull(),
   role: varchar('role', { length: 200 }),
   content: text('content').notNull(),
-  stars: serial('stars').default(5),
+  stars: integer('stars').default(5),
   status: varchar('status', { length: 50 }).default('pending'),
   createdAt: timestamp('created_at').defaultNow(),
 });

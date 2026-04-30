@@ -36,9 +36,17 @@ export default function Footer() {
             <li><a href="https://www.instagram.com/lovevibe_studios" target="_blank" rel="noreferrer">Instagram</a></li>
           </ul>
         </div>
+        <div className={styles.col}>
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Charter</a></li>
+            <li><a href="/privacy">Terms of Engagement</a></li>
+          </ul>
+        </div>
       </footer>
       <div className={styles.bottom}>
         <span>© {new Date().getFullYear()} Love Vibe Studios. All rights reserved.</span>
+        <a href="/privacy" className={styles.privacyLink}>Privacy &amp; Terms</a>
         <span>Where love is learned and not left to chance</span>
       </div>
     </>
