@@ -1,4 +1,3 @@
-import { getCourses } from '@/lib/actions';
 import styles from './Services.module.css';
 
 const FALLBACK_SERVICES = [
@@ -10,18 +9,8 @@ const FALLBACK_SERVICES = [
   { icon: '🌅', title: 'Thriving Beyond Divorce', desc: 'Divorce is not the end. Rebuild your identity, heal emotionally, co-parent with confidence, and step into a new chapter filled with purpose, peace, and possibility.' },
 ];
 
-const ICONS = ['💍', '🌹', '🔥', '⚖️', '🆘', '🌅', '✨', '📚', '🤝'];
-
-export default async function Services() {
-  const dbCourses = await getCourses();
-  
-  const services = dbCourses.length > 0
-    ? dbCourses.map((c, i) => ({
-        icon: ICONS[i % ICONS.length],
-        title: c.title,
-        desc: c.description
-      }))
-    : FALLBACK_SERVICES;
+export default function Services() {
+  const services = FALLBACK_SERVICES;
 
   return (
     <section className={styles.services} id="services">
@@ -29,9 +18,6 @@ export default async function Services() {
         <div className={styles['section-tag']}>What We Offer</div>
         <h2>Courses &amp; Programmes for Every <em>Season</em> of Love</h2>
         <p>Whether you&apos;re preparing to say &quot;I do,&quot; navigating the complexities of marriage, or healing after separation — we have a path for you.</p>
-   
-
-      
       </div>
       <div className={styles['services-grid']}>
         {services.map(s => (

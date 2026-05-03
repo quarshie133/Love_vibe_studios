@@ -33,7 +33,7 @@ export default function Enquiries() {
             <div className={styles['contact-detail-icon']}>🌐</div>
             <div className={styles['contact-detail-text']}>
               <span className={styles['contact-detail-label']}>Social Media</span>
-              <div className={styles['contact-detail-value']}>@LoveVibeStudios on YouTube, TikTok & Instagram</div>
+              <div className={styles['contact-detail-value']}>@LoveVibeStudio on YouTube, TikTok & Instagram</div>
             </div>
           </div>
         </div>

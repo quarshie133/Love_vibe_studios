@@ -17,7 +17,7 @@ import { getCourses } from '@/lib/actions';
 export default async function Home() {
   const courses = await getCourses();
   
-  const programs = courses.length > 0
+  const rawPrograms = courses.length > 0
     ? [...courses.map(c => c.title), 'Not sure — I need guidance']
     : [
         'Pre-Marital Counseling',
@@ -28,6 +28,8 @@ export default async function Home() {
         'Thriving Beyond Divorce',
         'Not sure — I need guidance'
       ];
+      
+  const programs = Array.from(new Set(rawPrograms));
 
   return (
     <>

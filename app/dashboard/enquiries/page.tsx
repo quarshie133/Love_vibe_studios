@@ -1,4 +1,5 @@
 import { getEnquiries } from '@/lib/actions';
+import DeleteButton from './DeleteButton';
 import styles from './enquiries.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -34,8 +35,10 @@ export default async function EnquiriesPage() {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Program</th>
+                <th>Message</th>
                 <th>Status</th>
                 <th>Date</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -44,8 +47,10 @@ export default async function EnquiriesPage() {
                   <td>{e.firstName} {e.lastName}</td>
                   <td>{e.email}</td>
                   <td>{e.program || '—'}</td>
+                  <td>{e.message ? <div className={styles.messageCell} title={e.message}>{e.message.length > 50 ? e.message.substring(0, 50) + '...' : e.message}</div> : '—'}</td>
                   <td><span className={`${styles.badge} ${e.status === 'new' ? styles.badgeNew : ''}`}>{e.status}</span></td>
                   <td>{e.createdAt ? new Date(e.createdAt).toLocaleDateString() : '—'}</td>
+                  <td><DeleteButton id={e.id} /></td>
                 </tr>
               ))}
             </tbody>

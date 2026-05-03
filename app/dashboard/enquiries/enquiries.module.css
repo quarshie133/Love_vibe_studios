@@ -52,3 +52,32 @@
 }
 
 .badgeNew { background: rgba(212,175,55,0.15); color: var(--gold); }
+
+.messageCell {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: help;
+}
+
+.deleteBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.6;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+  padding: 0.2rem;
+  border-radius: 4px;
+}
+
+.deleteBtn:hover {
+  opacity: 1;
+  background: rgba(255, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+.deleteBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

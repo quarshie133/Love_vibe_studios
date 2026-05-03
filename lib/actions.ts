@@ -3,6 +3,7 @@
 import { db } from './db';
 import { enquiries, testimonials, courses, bookings } from './schema';
 import { desc, eq } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
 
 export async function getCourses() {
   return db.select().from(courses).orderBy(desc(courses.createdAt));
@@ -24,6 +25,8 @@ export async function addCourse(data: {
 }) {
   try {
     await db.insert(courses).values(data);
+    revalidatePath('/');
+    revalidatePath('/dashboard/courses');
     return { success: true };
   } catch (error) {
     console.error('Failed to add course:', error);
@@ -34,6 +37,8 @@ export async function addCourse(data: {
 export async function updateCourse(id: number, data: Partial<typeof courses.$inferInsert>) {
   try {
     await db.update(courses).set(data).where(eq(courses.id, id));
+    revalidatePath('/');
+    revalidatePath('/dashboard/courses');
     return { success: true };
   } catch (error) {
     console.error('Failed to update course:', error);
@@ -44,6 +49,8 @@ export async function updateCourse(id: number, data: Partial<typeof courses.$inf
 export async function deleteCourse(id: number) {
   try {
     await db.delete(courses).where(eq(courses.id, id));
+    revalidatePath('/');
+    revalidatePath('/dashboard/courses');
     return { success: true };
   } catch (error) {
     console.error('Failed to delete course:', error);
@@ -85,12 +92,65 @@ export async function submitEnquiry(data: {
   }
 }
 
+export async function deleteEnquiry(id: number) {
+  try {
+    await db.delete(enquiries).where(eq(enquiries.id, id));
+    revalidatePath('/dashboard/enquiries');
+    revalidatePath('/');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to delete enquiry:', error);
+    return { success: false };
+  }
+}
+
 export async function getEnquiries() {
   return db.select().from(enquiries).orderBy(desc(enquiries.createdAt));
 }
 
 export async function getTestimonials() {
   return db.select().from(testimonials).orderBy(desc(testimonials.createdAt));
+}
+
+export async function getTestimonialById(id: number) {
+  const [testimonial] = await db.select().from(testimonials).where(eq(testimonials.id, id));
+  return testimonial;
+}
+
+export async function addTestimonial(data: Partial<typeof testimonials.$inferInsert>) {
+  try {
+    await db.insert(testimonials).values(data as any);
+    revalidatePath('/');
+    revalidatePath('/dashboard/testimonials');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to add testimonial:', error);
+    return { success: false };
+  }
+}
+
+export async function updateTestimonial(id: number, data: Partial<typeof testimonials.$inferInsert>) {
+  try {
+    await db.update(testimonials).set(data).where(eq(testimonials.id, id));
+    revalidatePath('/');
+    revalidatePath('/dashboard/testimonials');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to update testimonial:', error);
+    return { success: false };
+  }
+}
+
+export async function deleteTestimonial(id: number) {
+  try {
+    await db.delete(testimonials).where(eq(testimonials.id, id));
+    revalidatePath('/');
+    revalidatePath('/dashboard/testimonials');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to delete testimonial:', error);
+    return { success: false };
+  }
 }
 
 export async function getStats() {

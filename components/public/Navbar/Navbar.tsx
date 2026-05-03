@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <nav className={styles.nav}>
       <Link href="#" className={styles.logo}>
-        Love <span>Vibe</span> Studios
+        Love <span>Vibe</span> Studio
       </Link>
       <ul className={styles.links}>
         <li><a href="#services">Services</a></li>

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getTestimonials } from '@/lib/actions';
 import styles from './testimonials.module.css';
 
@@ -13,19 +14,18 @@ export default async function TestimonialsPage() {
     dbError = true;
   }
 
-  const seeded = [
-    { id: -1, name: '— Amara & Tunde', role: 'Pre-Marital Counseling', content: 'The pre-marital courses gave us a language to talk about things we\'d never even discussed.', status: 'approved', createdAt: null, stars: 5 },
-    { id: -2, name: '— David & Mercy', role: 'Crisis Management', content: 'I didn\'t think we could come back from where we were. The crisis counseling saved our marriage.', status: 'approved', createdAt: null, stars: 5 },
-    { id: -3, name: '— Chioma O.', role: 'Thriving Beyond Divorce', content: 'After my divorce, I felt lost. Love Vibe Studios helped me find myself again.', status: 'approved', createdAt: null, stars: 5 },
-  ];
-
-  const all = dbError ? seeded : (testimonials.length === 0 ? seeded : testimonials);
+  const all = testimonials;
 
   return (
     <div>
       <div className={styles.header}>
-        <h1>Testimonials</h1>
-        <p>Manage client stories and reviews.</p>
+        <div>
+          <h1>Testimonials</h1>
+          <p>Manage client stories and reviews.</p>
+        </div>
+        <Link href="/dashboard/testimonials/new" className={styles.btn}>
+          + Add New Testimonial
+        </Link>
       </div>
       {dbError && (
         <div className={styles.notice}>⚠️ Showing sample data — connect your database to manage real testimonials.</div>
@@ -39,7 +39,10 @@ export default async function TestimonialsPage() {
               <strong>{t.name}</strong>
               <span>{t.role}</span>
             </div>
-            <span className={`${styles.badge} ${t.status === 'approved' ? styles.approved : styles.pending}`}>{t.status}</span>
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem'}}>
+              <span className={`${styles.badge} ${t.status === 'approved' ? styles.approved : styles.pending}`}>{t.status}</span>
+              <Link href={`/dashboard/testimonials/${t.id}`} className={styles.editBtn}>Edit</Link>
+            </div>
           </div>
         ))}
       </div>
