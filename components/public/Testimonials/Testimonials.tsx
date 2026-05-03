@@ -8,7 +8,7 @@ const TESTIMONIALS = [
 ];
 
 export default async function Testimonials() {
-  let dbTestimonials = [];
+  let dbTestimonials: Awaited<ReturnType<typeof getTestimonials>> = [];
   try {
     dbTestimonials = await getTestimonials();
   } catch (error) {
