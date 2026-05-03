@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { updateCourse, deleteCourse, getCourseById } from '@/lib/actions';
 import Link from 'next/link';
+import ConfirmModal from '@/components/dashboard/ConfirmModal/ConfirmModal';
 import styles from '../courses.module.css';
 
 export default function EditCoursePage() {
@@ -14,6 +15,7 @@ export default function EditCoursePage() {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [course, setCourse] = useState<any>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -42,8 +44,7 @@ export default function EditCoursePage() {
     });
 
     if (result.success) {
-      router.push('/dashboard/courses');
-      router.refresh();
+      window.location.href = '/dashboard/courses';
     } else {
       alert('Failed to update course.');
       setLoading(false);
@@ -51,16 +52,14 @@ export default function EditCoursePage() {
   }
 
   async function handleDelete() {
-    if (!confirm('Are you sure you want to delete this course?')) return;
-    
     setLoading(true);
     const result = await deleteCourse(id);
     if (result.success) {
-      router.push('/dashboard/courses');
-      router.refresh();
+      window.location.href = '/dashboard/courses';
     } else {
       alert('Failed to delete course.');
       setLoading(false);
+      setShowDeleteModal(false);
     }
   }
 
@@ -69,6 +68,15 @@ export default function EditCoursePage() {
 
   return (
     <div className={styles.container}>
+      <ConfirmModal 
+        isOpen={showDeleteModal}
+        title="Delete Course"
+        message={`Are you sure you want to delete "${course.title}"? This action cannot be undone.`}
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeleteModal(false)}
+        loading={loading}
+      />
+
       <div className={styles.header}>
         <div>
           <h1>Edit Course</h1>
@@ -125,7 +133,7 @@ export default function EditCoursePage() {
           </div>
 
           <div className={styles.footerActions}>
-            <button type="button" onClick={handleDelete} disabled={loading} className={styles.deleteBtn}>
+            <button type="button" onClick={() => setShowDeleteModal(true)} disabled={loading} className={styles.deleteBtn}>
               Delete Course
             </button>
             <button type="submit" disabled={loading} className={styles.submitBtn}>

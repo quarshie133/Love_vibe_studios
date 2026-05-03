@@ -26,8 +26,7 @@ export default function NewCoursePage() {
     });
 
     if (result.success) {
-      router.push('/dashboard/courses');
-      router.refresh();
+      window.location.href = '/dashboard/courses';
     } else {
       alert('Failed to add course. Please try again.');
       setLoading(false);

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { updateTestimonial, deleteTestimonial, getTestimonialById } from '@/lib/actions';
 import Link from 'next/link';
+import ConfirmModal from '@/components/dashboard/ConfirmModal/ConfirmModal';
 import styles from '../../courses/courses.module.css';
 
 export default function EditTestimonialPage() {
@@ -14,6 +15,7 @@ export default function EditTestimonialPage() {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [testimonial, setTestimonial] = useState<any>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -40,8 +42,7 @@ export default function EditTestimonialPage() {
     });
 
     if (result.success) {
-      router.push('/dashboard/testimonials');
-      router.refresh();
+      window.location.href = '/dashboard/testimonials';
     } else {
       alert('Failed to update testimonial.');
       setLoading(false);
@@ -49,16 +50,14 @@ export default function EditTestimonialPage() {
   }
 
   async function handleDelete() {
-    if (!confirm('Are you sure you want to delete this testimonial?')) return;
-    
     setLoading(true);
     const result = await deleteTestimonial(id);
     if (result.success) {
-      router.push('/dashboard/testimonials');
-      router.refresh();
+      window.location.href = '/dashboard/testimonials';
     } else {
       alert('Failed to delete testimonial.');
       setLoading(false);
+      setShowDeleteModal(false);
     }
   }
 
@@ -67,6 +66,15 @@ export default function EditTestimonialPage() {
 
   return (
     <div className={styles.container}>
+      <ConfirmModal 
+        isOpen={showDeleteModal}
+        title="Delete Testimonial"
+        message={`Are you sure you want to delete the testimonial from "${testimonial.name}"?`}
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeleteModal(false)}
+        loading={loading}
+      />
+
       <div className={styles.header}>
         <div>
           <h1>Edit Testimonial</h1>
@@ -107,7 +115,7 @@ export default function EditTestimonialPage() {
           </div>
 
           <div className={styles.footerActions}>
-            <button type="button" onClick={handleDelete} disabled={loading} className={styles.deleteBtn}>
+            <button type="button" onClick={() => setShowDeleteModal(true)} disabled={loading} className={styles.deleteBtn}>
               Delete Testimonial
             </button>
             <button type="submit" disabled={loading} className={styles.submitBtn}>

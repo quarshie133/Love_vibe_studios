@@ -24,8 +24,7 @@ export default function NewTestimonialPage() {
     });
 
     if (result.success) {
-      router.push('/dashboard/testimonials');
-      router.refresh();
+      window.location.href = '/dashboard/testimonials';
     } else {
       alert('Failed to add testimonial.');
       setLoading(false);
